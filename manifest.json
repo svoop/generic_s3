@@ -1,9 +1,9 @@
 {
-  "domain": "aws_s3",
-  "name": "AWS S3",
-  "codeowners": ["@tomasbedrich"],
+  "domain": "generic_s3",
+  "name": "Generic S3",
+  "codeowners": ["@svoop"],
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/aws_s3",
+  "documentation": "https:/github.com/svoop/generic_s3",
   "integration_type": "service",
   "iot_class": "cloud_push",
   "loggers": ["aiobotocore"],
