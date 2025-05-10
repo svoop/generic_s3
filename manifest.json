@@ -1,6 +1,7 @@
 {
   "domain": "generic_s3",
   "name": "Generic S3",
+  "version": "2025.5.0",
   "codeowners": ["@svoop"],
   "config_flow": true,
   "documentation": "https:/github.com/svoop/generic_s3",
