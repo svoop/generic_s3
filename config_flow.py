@@ -18,11 +18,14 @@ from homeassistant.helpers.selector import (
 )
 
 from .const import (
+    AWS_DOMAIN,
     CONF_ACCESS_KEY_ID,
     CONF_BUCKET,
     CONF_ENDPOINT_URL,
+    CONF_PREFIX,
     CONF_SECRET_ACCESS_KEY,
     DEFAULT_ENDPOINT_URL,
+    DESCRIPTION_AWS_S3_DOCS_URL,
     DESCRIPTION_BOTO3_DOCS_URL,
     DOMAIN,
 )
@@ -34,6 +37,7 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
             config=TextSelectorConfig(type=TextSelectorType.PASSWORD)
         ),
         vol.Required(CONF_BUCKET): cv.string,
+        vol.Optional(CONF_PREFIX, default=""): vol.All(str, vol.Length(max=512)),
         vol.Required(CONF_ENDPOINT_URL, default=DEFAULT_ENDPOINT_URL): TextSelector(
             config=TextSelectorConfig(type=TextSelectorType.URL)
         ),
@@ -55,11 +59,13 @@ class S3ConfigFlow(ConfigFlow, domain=DOMAIN):
                 {
                     CONF_BUCKET: user_input[CONF_BUCKET],
                     CONF_ENDPOINT_URL: user_input[CONF_ENDPOINT_URL],
+                    CONF_PREFIX: user_input[CONF_PREFIX],
                 }
             )
 
-            parsed_url = urlparse(user_input[CONF_ENDPOINT_URL])
-            if not (parsed_url.scheme in ('http', 'https') and parsed_url.hostname):
+            if not urlparse(user_input[CONF_ENDPOINT_URL]).hostname.endswith(
+                AWS_DOMAIN
+            ):
                 errors[CONF_ENDPOINT_URL] = "invalid_endpoint_url"
             else:
                 try:
@@ -82,7 +88,10 @@ class S3ConfigFlow(ConfigFlow, domain=DOMAIN):
                     errors[CONF_ENDPOINT_URL] = "cannot_connect"
                 else:
                     return self.async_create_entry(
-                        title=user_input[CONF_BUCKET], data=user_input
+                        title=f"{user_input[CONF_BUCKET]} - {user_input[CONF_PREFIX]}"
+                        if user_input[CONF_PREFIX]
+                        else user_input[CONF_BUCKET],
+                        data=user_input,
                     )
 
         return self.async_show_form(
