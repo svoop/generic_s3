@@ -4,7 +4,7 @@
   "version": "2025.5.0",
   "codeowners": ["@svoop"],
   "config_flow": true,
-  "documentation": "https:/github.com/svoop/generic_s3",
+  "documentation": "https:/github.com/connochio/generic_s3_prefixes",
   "integration_type": "service",
   "iot_class": "cloud_push",
   "loggers": ["aiobotocore"],
