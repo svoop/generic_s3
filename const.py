@@ -5,7 +5,7 @@ from typing import Final
 
 from homeassistant.util.hass_dict import HassKey
 
-DOMAIN: Final = "generic_s3"
+DOMAIN: Final = "generic_s3_prefix"
 
 CONF_ACCESS_KEY_ID = "access_key_id"
 CONF_SECRET_ACCESS_KEY = "secret_access_key"

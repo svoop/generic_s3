@@ -18,14 +18,12 @@ from homeassistant.helpers.selector import (
 )
 
 from .const import (
-    AWS_DOMAIN,
     CONF_ACCESS_KEY_ID,
     CONF_BUCKET,
     CONF_ENDPOINT_URL,
     CONF_PREFIX,
     CONF_SECRET_ACCESS_KEY,
     DEFAULT_ENDPOINT_URL,
-    DESCRIPTION_AWS_S3_DOCS_URL,
     DESCRIPTION_BOTO3_DOCS_URL,
     DOMAIN,
 )
@@ -63,9 +61,9 @@ class S3ConfigFlow(ConfigFlow, domain=DOMAIN):
                 }
             )
 
-            if not urlparse(user_input[CONF_ENDPOINT_URL]).hostname.endswith(
-                AWS_DOMAIN
-            ):
+            parsed_url = urlparse(user_input[CONF_ENDPOINT_URL])
+            if not (parsed_url.scheme in ('http', 'https') and parsed_url.hostname):
+
                 errors[CONF_ENDPOINT_URL] = "invalid_endpoint_url"
             else:
                 try:

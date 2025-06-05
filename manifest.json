@@ -1,6 +1,6 @@
 {
-  "domain": "generic_s3",
-  "name": "Generic S3",
+  "domain": "generic_s3_prefix",
+  "name": "Generic S3 Prefix",
   "version": "2025.5.0",
   "codeowners": ["@svoop"],
   "config_flow": true,
