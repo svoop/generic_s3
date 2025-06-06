@@ -11,6 +11,6 @@ Hopefully short-lived since this repo will be archived as soon as Home Assistant
 cd config   # where configuration.yaml lives
 mkdir custom_components
 cd custom_components
-git clone https://github.com/connochio/generic_s3_prefixes.git
+git clone https://github.com/svoop/generic_s3.git
 ha core restart
 ```
