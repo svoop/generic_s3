@@ -15,7 +15,7 @@ git clone https://github.com/svoop/generic_s3.git
 ha core restart
 ```
 <details>
-<summary>## Prefixes (optional)</summary>
+<summary># Prefixes (optional)</summary>
 
 
 In order to use Prefixes, you will need to enter a prefix when creating a new connection.
