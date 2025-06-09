@@ -14,14 +14,17 @@ cd custom_components
 git clone https://github.com/svoop/generic_s3.git
 ha core restart
 ```
-<details>
-<summary># Prefixes (optional)</summary>
 
+## Optional Details
+
+<details>
+<summary>Prefixes</summary>
+<br>
 
 In order to use Prefixes, you will need to enter a prefix when creating a new connection.
 Pre-existing connections cannot be changed to include a new prefix.
 
-When entering a prefix use the following syntax, making sure to include the trailing slash:
+When entering a prefix, use the following syntax, making sure to include the trailing slash:
 
 ```
 firstfolder/nextfolder/lastfolder/
@@ -32,4 +35,65 @@ For example, if you would like to use the location "backups/homeassistant/" with
 ```
 backups/homeassistant/
 ```
+
+<br>
+<details>
+
+<summary>S3 IAM Policy</summary>
+<br>
+
+In order to get IAM working with read/write to the location that you would like, without allowing access to any other folders within the bucket an example IAM policy is shown below:
+
+This policy assumes the following information:
+  * A bucket with the name "myhomebackups"
+  * A prefix of "backups/homeassistant"
+
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListAllMyBuckets",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::myhomebackups",
+      "Condition": {
+        "StringEquals": {
+          "s3:prefix": [
+            "",
+            "backups/",
+            "backups/homeassistant/"
+          ]
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::myhomebackups",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": "backups/*",
+          "s3:prefix": "backups/homeassistant/*"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::myhomebackups/backups/homeassistant/*"
+    }
+  ]
+}
+```
+
+</details>
 </details>
