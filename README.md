@@ -1,3 +1,6 @@
+> DEPRECATED:
+> Please use the [S3-Compatible](https://github.com/PhantomPhoton/S3-Compatible) integration from HACS instead. It works fine e.g. with Hetzner Object Storage and many other S3 clones.
+
 # Generic S3 component for Home Assistant
 
 A quick fork of the [AWS S3 component](https://github.com/home-assistant/core/tree/dev/homeassistant/components/aws_s3) by [
